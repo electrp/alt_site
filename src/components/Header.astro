@@ -1,0 +1,53 @@
+---
+
+export const pages = [ 
+    { name: "Home", path: "/" },
+    { name: "Projects", path: "/Projects/" },
+    { name: "About", path: "About" },
+]
+
+
+---
+
+<div id="page-selector" class="page-selector">
+    {pages.map((data) => <a href={data.path}>{data.name}</a>)}
+</div>
+
+<style>
+.page-selector {
+  width: 100%;
+  display: none;
+  margin: 0;
+}
+
+.page-selector a {
+  display: block;
+  text-align: center;
+  padding: 10px 0;>
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #0d0950;
+}
+
+.page-selector a:hover,
+.page-selector a:focus {
+  background-color: #ff9776;
+}
+
+@media screen and (min-width: 636px) {
+  .page-selector {
+    margin-left: 5em;
+    display: block;
+    position: static;
+    width: auto;
+    background: none;
+  }
+
+  .page-selector a {
+    display: inline-block;
+    padding: 15px 20px;
+  }
+}
+</style>

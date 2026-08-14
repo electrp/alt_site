@@ -1,0 +1,38 @@
+---
+
+export type GifRef = {
+    path: string;
+    tag: string; 
+}
+
+const gif_urls = import.meta.glob("../assets/gifs/*.mp4", {eager: true});
+const all = Object.values(gif_urls)
+const max_images = 7;
+
+// const cats: GifRef[] = [
+//     { path:  }
+// ]
+
+---
+
+<video id="random_gif" muted loop playsinline />
+
+<script define:vars={{ all, max_images }}>
+    const image_idx = Math.floor(Math.random() * max_images);
+    var video = document.getElementById("random_gif");
+    var source = document.createElement('source');
+    video?.appendChild(source)
+
+    source.setAttribute('src', all[image_idx].default);
+    source.setAttribute('type', 'video/mp4');
+    
+    video.width = 300;
+    video.height = 300;
+    video?.play();
+</script>
+
+<head>
+<style>
+    #random_gif { width: 100%; max-width: 800px; height: auto; }
+</style>
+</head>
