@@ -7,6 +7,12 @@ import { glob } from 'astro/loaders'
 import cat from '../assets/gifs/flat-hamster.mp4'
 
 
+
+import snarkdown from 'snarkdown';
+
+const md = '_this_ is **easy** to `use`.';
+const sd = snarkdown(md);
+// <em>this</em> is <strong>easy</strong> to <code>use</code>.
 ---
 <div id="container">
 	<img id="background" src={background.src} alt="" fetchpriority="high" />
