@@ -5,6 +5,6 @@ import preact from '@astrojs/preact';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://electrp.com',
+  site: 'https://electrp.github.com',
   integrations: [preact()],
 })
