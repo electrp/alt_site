@@ -1,0 +1,32 @@
+---
+interface Props {
+  tag: any,
+  clickable: boolean 
+}
+
+const { tag, clickable = true } = Astro.props
+---
+
+{clickable ? (
+    <a href={"/tags/" + tag.id}> 
+        <div class="tag">
+            {tag.data.name}
+        </div>
+    </a> 
+) : (
+    <div class="tag">
+        {tag.data.name}
+    </div>
+)}
+
+
+<style>
+.tag {
+  border-radius: 7px;
+  background-color: #73AD21;
+  padding: 2px;
+  width: fit-content;
+  height: fit-content;
+  display: inline-block;
+}
+</style>

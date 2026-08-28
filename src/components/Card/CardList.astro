@@ -1,0 +1,39 @@
+---
+import { getCollection, getEntries } from 'astro:content';
+
+import Card from "./Card.astro"
+
+interface Props {
+    tag_filter?: string;
+}
+
+const { tag_filter = "" } = Astro.props
+const pages = await getEntries(await getCollection("pages"))
+const tags = await getEntries(await getCollection("tags"))
+const filtered = pages.filter(page => {
+  return page.data.tags.map(tag => tag.id).includes(tag_filter)
+})
+---
+
+<div class="cardlist">
+    {pages.map((post) => {
+        var tag_strings = post.data.tags.map(tag => tag.id)
+        if (tag_filter != "" && !tag_strings.includes(tag_filter)) {
+            return 
+        } else {
+            return <Card page={post}/>
+        }
+    })}
+</div>
+
+<style>
+.cardlist {
+  max-width: 700px;
+  margin: 1em auto;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-gap: 20px;
+}
+
+</style>

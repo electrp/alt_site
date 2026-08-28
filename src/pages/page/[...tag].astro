@@ -1,0 +1,31 @@
+
+---
+import { toAttributeString } from 'astro/runtime/server/render/util.js';
+import { render } from 'astro:content';
+import { getCollection, getEntries } from 'astro:content';
+import { file } from 'astro:schema';
+import Tag from '../../components/Tag.astro';
+
+export async function getStaticPaths() {
+    const pages = await getEntries(await getCollection("pages"))
+      
+    var a = await Promise.all(pages.map(async page => {
+      return { 
+        params: { tag: page.id }, 
+        props: { page: page }
+      };
+    }))
+    return a
+}
+
+const { page } = Astro.props;
+const { Content } = await render(page)
+const tags = await getEntries(page.data.tags)
+---
+<!-- <BaseLayout pageTitle={tag}> -->
+<h1>
+  {page.data.title}
+</h1>
+{tags.map(tag => <Tag tag={tag} clickable=true />)}
+<Content />
+<!-- </BaseLayout> -->

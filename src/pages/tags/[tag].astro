@@ -1,0 +1,30 @@
+---
+import { toAttributeString } from 'astro/runtime/server/render/util.js';
+import { getCollection, getEntries } from 'astro:content';
+import { file } from 'astro:schema';
+
+import Card from '../../components/Card/Card';
+import CardList from '../../components/Card/CardList.astro';
+
+// import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+    const tags = await getEntries(await getCollection("tags"))
+    const posts = await getEntries(await getCollection("pages"))
+        
+    return tags.map(tag => (
+      { 
+        params: { tag: tag.id }, 
+        props: { tag: tag, posts: posts }
+      }
+    ))
+}
+const { tag, posts } = Astro.props;
+const filtered = posts.filter(post => {
+  return post.data.tags.map(tag => tag.id).includes(tag.id)
+})
+---
+<!-- <BaseLayout pageTitle={tag}> -->
+<p>Posts tagged with {tag.data.name}</p>
+<CardList tag_filter={tag.id} />
+<!-- </BaseLayout> -->
