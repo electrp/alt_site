@@ -12,6 +12,7 @@ import CardList from '../components/Card/CardList.astro';
 // Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 
 import { getCollection, getEntries } from 'astro:content';
+import Ring from '../components/Ring.astro';
 
 const pages = await getEntries(await getCollection("pages"))
 ---
@@ -22,7 +23,7 @@ const pages = await getEntries(await getCollection("pages"))
 	<!-- <Welcome /> -->
 	<Header />
 
-	<video id="random_gif" muted loop playsinline />
+	<!-- <video id="random_gif" muted loop playsinline /> -->
 
 	<!-- <script define:vars={{ cat }}>
 		var video = document.getElementById("random_gif");
@@ -33,7 +34,8 @@ const pages = await getEntries(await getCollection("pages"))
 		source.setAttribute('type', 'video/mp4');
 		video?.play();
 	</script> -->
-	<GifBox />
-	<CardList />
-	
+	<!-- <GifBox /> -->
+	<Ring border_color="to bottom, red, yellow", fill_color='blue'>
+		<CardList />
+	</Ring>
 </Layout>

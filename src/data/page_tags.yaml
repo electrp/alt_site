@@ -1,4 +1,8 @@
 test:
   name: Test Tag
+  color: Tomato
+  text_color: black
 engine:
   name: Engines
+  color: Blue
+  text_color: black

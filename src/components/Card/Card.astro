@@ -16,14 +16,16 @@ const tags = await getEntries(page.data.tags)
 <article class="card">
   <!-- title -->
   <a class="card_link" href={"/page/" + page.id}>
-    <header>{page.data.title} </header>
+    <header>{page.data.title}</header>
   </a>
   <!-- tags -->
+  <div class="tags">
   {
     tags.map(tag => (
       <Tag tag={tag} clickable={tag_clickable} />
     ))
   }
+  </div>
   { /* Hero images/video */}
   {/* project */}
   <p>{page.data.project}</p>
@@ -37,6 +39,11 @@ const tags = await getEntries(page.data.tags)
   display: grid;
   grid-template-rows: max-content 200px 1fr;
   transition: transform 0.3s ease-in-out; 
+}
+
+.tags {
+  flex-direction: row;
+  flex: auto;
 }
 
 .card:hover {

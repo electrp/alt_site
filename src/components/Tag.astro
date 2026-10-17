@@ -5,6 +5,8 @@ interface Props {
 }
 
 const { tag, clickable = true } = Astro.props
+const color = tag.data.color;
+const text_color = tag.data.text_color ? tag.data.text_color : "Black";
 ---
 
 {clickable ? (
@@ -20,11 +22,13 @@ const { tag, clickable = true } = Astro.props
 )}
 
 
-<style>
+<style define:vars={{ color, text_color }}>
 .tag {
   border-radius: 7px;
-  background-color: #73AD21;
+  background-color: var(--color);
+  color: var(--text_color);
   padding: 2px;
+  margin: 2px;
   width: fit-content;
   height: fit-content;
   display: inline-block;

@@ -1,11 +1,22 @@
 import { defineCollection, getCollection, reference } from 'astro:content';
 import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod'
+import color from "color-string";
+
+export function colorValidator(val: string) {
+  try {
+    return color.get(val) != null;
+  } catch {
+    return false;
+  }
+}
 
 const tags = defineCollection({
   loader: file("src/data/page_tags.yaml"),
   schema: z.object({
     name: z.string(),
+    color: z.string().refine(colorValidator),
+    text_color: z.optional(z.string().refine(colorValidator)),
   })
 })
 

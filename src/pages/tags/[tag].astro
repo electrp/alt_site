@@ -5,8 +5,12 @@ import { file } from 'astro:schema';
 
 import Card from '../../components/Card/Card';
 import CardList from '../../components/Card/CardList.astro';
+import CommonHead from '../../components/CommonHead.astro';
+import Header from '../../components/Header.astro';
+import Layout from '../../layouts/Layout.astro';
 
 // import BaseLayout from '../../layouts/BaseLayout.astro';
+
 
 export async function getStaticPaths() {
     const tags = await getEntries(await getCollection("tags"))
@@ -24,7 +28,10 @@ const filtered = posts.filter(post => {
   return post.data.tags.map(tag => tag.id).includes(tag.id)
 })
 ---
-<!-- <BaseLayout pageTitle={tag}> -->
-<p>Posts tagged with {tag.data.name}</p>
-<CardList tag_filter={tag.id} />
-<!-- </BaseLayout> -->
+
+<Layout>
+  <CommonHead />
+  <Header />
+  <p>Posts tagged with {tag.data.name}</p>
+  <CardList tag_filter={tag.id} />
+</Layout>

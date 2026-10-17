@@ -5,6 +5,10 @@ import { render } from 'astro:content';
 import { getCollection, getEntries } from 'astro:content';
 import { file } from 'astro:schema';
 import Tag from '../../components/Tag.astro';
+import CommonHead from '../../components/CommonHead.astro';
+import Header from '../../components/Header.astro';
+import Layout from '../../layouts/Layout.astro';
+
 
 export async function getStaticPaths() {
     const pages = await getEntries(await getCollection("pages"))
@@ -22,10 +26,13 @@ const { page } = Astro.props;
 const { Content } = await render(page)
 const tags = await getEntries(page.data.tags)
 ---
-<!-- <BaseLayout pageTitle={tag}> -->
-<h1>
-  {page.data.title}
-</h1>
-{tags.map(tag => <Tag tag={tag} clickable=true />)}
-<Content />
-<!-- </BaseLayout> -->
+
+<Layout>
+  <CommonHead />
+  <Header />
+  <header>
+    {page.data.title}
+  </header>
+  {tags.map(tag => <Tag tag={tag} clickable=true />)}
+  <Content />
+</Layout>
