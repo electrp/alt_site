@@ -1,3 +1,9 @@
+---
+import { pallete }  from "../scripts/pallete"
+
+const bg = pallete.bg.hex();
+
+---
 <!doctype html>
 <html lang="en">
 	<head>
@@ -13,9 +19,10 @@
 	</body>
 </html>
 
-<style>
+<style is:global define:vars={{ bg }}>
 	html,
 	body {
+		background-color: var(--bg);
 		margin: 0;
 		width: 100%;
 		height: 100%;
