@@ -2,8 +2,7 @@
 
 const gif_urls = import.meta.glob("../assets/gifs/*.mp4", {eager: true});
 const all = Object.values(gif_urls)
-const max_images = 7;
-
+const max_images = all.length;
 ---
 
 <video id="random_gif" muted loop playsinline />
