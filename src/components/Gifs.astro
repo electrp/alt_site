@@ -10,14 +10,17 @@ const max_images = all.length;
 <script define:vars={{ all, max_images }}>
     function play_gif() {
         const image_idx = Math.floor(Math.random() * max_images);
-        var video = document.getElementById("random_gif");
-        var source = document.createElement('source');
-        video?.appendChild(source)
+        var videos = document.querySelectorAll("[id=random_gif]");
+        for (const video of videos)
+        {
+            var source = document.createElement('source');
+            video?.appendChild(source)
 
-        source.setAttribute('src', all[image_idx].default);
-        source.setAttribute('type', 'video/mp4');
+            source.setAttribute('src', all[image_idx].default);
+            source.setAttribute('type', 'video/mp4');
 
-        video?.play();
+            video?.play();
+        }
     }
 
     document.addEventListener('astro:page-load', () => {

@@ -5,3 +5,12 @@ export const pallete = {
     accent: Color('#EE72F1'),
     bg: Color("#40343e")
 };
+
+export function make_even_radial_gradient(colors) {
+    var str_out = "conic-gradient("
+    for(const color of colors) {
+        str_out += color + ", "
+    }
+    str_out += color[0] + ")"
+    return str_out;
+}

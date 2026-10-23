@@ -1,3 +1,19 @@
+---
+import Ring from "./Ring.astro";
+
+interface Props {
+    url: string
+}
+
+const { 
+    url
+} = Astro.props;
+--- 
+
 <div id="header_button">
-    <p></p>
+    <a href={url}>
+        <Ring border_color="from -45deg, #726972, #EE72F1,#726972", fill_color='#40343e'>
+            <slot/>
+        </Ring>
+    </a>
 </div>

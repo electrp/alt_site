@@ -2,23 +2,36 @@
 interface Props {
     border_color: string,
     fill_color: string,
+    padding?: string,
+    border_radius?: string
 }
 
-const { border_color, fill_color } = Astro.props;
+const { 
+    border_color, 
+    fill_color,
+    padding = "5px",
+    border_radius = "10px",
+} = Astro.props;
 --- 
 
 <div class="content">
     <slot />
 </div>
 
-<style define:vars={{ border_color, fill_color }}>
+<style define:vars={{ 
+    border_color, 
+    fill_color,
+    padding,
+    border_radius,
+}}>
 .content {
     border: 3px solid transparent;
-    border-radius: 16px;
     background: 
-            linear-gradient(var(--fill_color)) padding-box, 
-        linear-gradient(var(--border_color)) border-box;
+        linear-gradient(var(--fill_color)) padding-box, 
+        conic-gradient(var(--border_color)) border-box;
     width: fit-content;
     height: fit-content;
+    padding: var(--padding);
+    border-radius: var(--border_radius);
 }
 </style>
