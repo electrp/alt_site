@@ -7,6 +7,7 @@ import icon from 'astro-icon';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://electrp.com/alt_site/',
+  site: 'https://electrp.com/',
+  base: "/alt_site",
   integrations: [preact(), icon()],
 })
