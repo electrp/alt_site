@@ -19,15 +19,17 @@ const homepage = Astro.url
   <a href="/" class="gifbox" style="padding-right: 3px;">
     <Gifs></Gifs>  
   </a>
-  <div style="display: flex; width: auto; height: 100%; align-items: center;">
+  <!-- <div style="display: flex; width: auto; height: 100%; align-items: center;">
     <div>
       my name is william<br>
       welcome to my webpage<br>
       &lt-- click to go home
     </div>
+  </div> -->
+  <div style="display: flex; flex-grow: 1; flex-direction: row; align-items: center; justify-content: center;">
+      <HeaderButton url="/">Home</HeaderButton>
+      <HeaderButton url="/about">About</HeaderButton>
   </div>
-  <HeaderButton url="/">Home</HeaderButton>
-  <HeaderButton url="/about">About</HeaderButton>
   <div style="display: flex; width: auto; height:100%; align-items: center; margin-left: auto; padding-right: 5px">
     <div>
       burger<br>button<br>(menu)
