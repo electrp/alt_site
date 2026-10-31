@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -e
-if [[ ! -d "/home/will/alt_site" ]]; then
+if [[ ! -d "/home/will/astro_web/site" ]]; then
   echo "Cannot find source directory; Did you move it?"
-  echo "(Looking for "/home/will/alt_site")"
+  echo "(Looking for "/home/will/astro_web/site")"
   echo 'Cannot force reload with this script - use "direnv reload" manually and then try again'
   exit 1
 fi
 
 # rebuild the cache forcefully
-_nix_direnv_force_reload=1 direnv exec "/home/will/alt_site" true
+_nix_direnv_force_reload=1 direnv exec "/home/will/astro_web/site" true

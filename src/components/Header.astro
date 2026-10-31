@@ -1,6 +1,7 @@
 ---
 import Gifs from "./Gifs.astro";
 import HeaderButton from "./HeaderButton.astro";
+import Ring from "./Ring.astro";
 
 
 export const pages = [ 
@@ -15,27 +16,26 @@ const props = Astro.props
 const homepage = Astro.url
 ---
 
-<div id="page-selector" class="page-selector">
-  <a href="/" class="gifbox" style="padding-right: 3px;">
-    <Gifs></Gifs>  
-  </a>
-  <!-- <div style="display: flex; width: auto; height: 100%; align-items: center;">
-    <div>
-      my name is william<br>
-      welcome to my webpage<br>
-      &lt-- click to go home
+<Ring border_color="#726972, #EE72F1,#726972", fill_color='#40343e', initial_angle="-45deg", rotate_amount="200deg", layer={3}, padding="0px", clip={true}>
+  <div id="page-selector" class="page-selector">
+    <a href="/" class="gifbox" style="padding-right: 3px;">
+      <Gifs></Gifs>  
+    </a>
+    <!-- <div style="display: flex; width: auto; height: 100%; align-items: center;">
+      <div>
+        my name is william<br>
+        welcome to my webpage<br>
+        &lt-- click to go home
+      </div>
+    </div> -->
+    <div style="display: flex; flex-grow: 1; flex-direction: row; align-items: center; justify-content: center;">
+        <HeaderButton url="/", text="Home" />
+        <HeaderButton url="/about", text="About" />
     </div>
-  </div> -->
-  <div style="display: flex; flex-grow: 1; flex-direction: row; align-items: center; justify-content: center;">
-      <HeaderButton url="/">Home</HeaderButton>
-      <HeaderButton url="/about">About</HeaderButton>
+    <div style="display: flex; width: auto; height:100%; align-items: center; margin-left: auto; padding-right: 5px">
   </div>
-  <div style="display: flex; width: auto; height:100%; align-items: center; margin-left: auto; padding-right: 5px">
-    <div>
-      burger<br>button<br>(menu)
-    </div>
   </div>
-</div>
+</Ring>
 
 <style>
 .gifbox {
@@ -46,7 +46,7 @@ const homepage = Astro.url
   width: 100%;
   height: 100px;
   /* margin: 0; */
-  background-color: #0d0950;
+  /* background-color: #0d0950; */
   color: #ffffff;
   display: flex;
   flex-direction: row;

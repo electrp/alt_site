@@ -8,9 +8,14 @@ import Ring from '../Ring.astro'
 interface Props {
   page: any
   tag_clickable?: boolean
+  layer?: number
 }
 
-const { page, tag_clickable = true } = Astro.props
+const { 
+  page, 
+  tag_clickable = true,
+  layer = 2,
+} = Astro.props
 const tags = await getEntries(page.data.tags)
 
 var colors_arr = tags.map(tag => tag.data.color);
@@ -19,7 +24,7 @@ const colors = colors_arr.join(", ")
 
 ---
 
-<Ring border_color={colors}, fill_color='#ffffff', class="card">
+<Ring border_color={colors}, class="card", layer={layer}>
   <article class="card">
     <!-- title -->
     <a class="card_link" href={"/page/" + page.id}>

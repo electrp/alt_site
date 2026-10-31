@@ -3,23 +3,30 @@ import Ring from "./Ring.astro";
 
 interface Props {
     url: string
+    text: string
 }
 
 const { 
-    url
+    url,
+    text
 } = Astro.props;
 --- 
 
-<div class="header_button">
-    <a href={url}>
-        <Ring border_color="#726972, #EE72F1,#726972", fill_color='#40343e', initial_angle="-45deg", rotate_amount="200deg">
-            <slot/>
-        </Ring>
-    </a>
-</div>
+<a href={url}, class="header_button" >
+    <Ring border_color="#726972, #EE72F1,#726972", fill_color='#40343e', initial_angle="-45deg", rotate_amount="200deg">
+        <div class="text">
+            {text}
+        </div>
+    </Ring>
+</a>
 
 <style>
 .header_button {
+    width: 25%;
+    min-width: fit-content;
     padding: 10px;
+}
+.text {
+    text-align: center;
 }
 </style>

@@ -1,27 +1,33 @@
 ---
+import Color, { type ColorInstance } from 'color';
+
 interface Props {
     border_color: string,
-    fill_color: string,
+    fill_color?: string,
     padding?: string,
     border_radius?: string,
     initial_angle?: string,
     rotate_amount?: string,
     class?: string,
+    layer?: number,
+    clip?: boolean,
 }
 
 const { 
     border_color, 
-    fill_color,
+    fill_color = '#40343e',
     padding = "5px",
     border_radius = "10px",
     initial_angle = "0deg",
     rotate_amount = "80deg",
-    class: className, ...rest
+    class: className, 
+    layer = 1,
+    clip = false,
 } = Astro.props;
 
-const linear_param = fill_color;
+const linear_param = Color(fill_color).darken(1-Math.exp(-.1*layer)).hex();
 const angular_param = `from calc(var(--angle) + ${initial_angle}), ` + border_color;
-
+const overflow = clip ? "hidden" : "visible";
 --- 
 
 <div class:list={["content", className]}>
@@ -34,7 +40,8 @@ const angular_param = `from calc(var(--angle) + ${initial_angle}), ` + border_co
     padding,
     border_radius,
     initial_angle,
-    rotate_amount
+    rotate_amount,
+    overflow
 }}>
 
 @property --angle {
@@ -53,6 +60,7 @@ const angular_param = `from calc(var(--angle) + ${initial_angle}), ` + border_co
     border-radius: var(--border_radius);
     transition: --angle .5s ease;
     box-shadow: 4px 6px 12px rgba(0, 0, 0, 1);
+    overflow: var(--overflow)
 }
 .content:hover {
     --angle: calc(var(--rotate_amount) + var(--initial_angle));
