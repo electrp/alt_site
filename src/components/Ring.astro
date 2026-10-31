@@ -3,7 +3,10 @@ interface Props {
     border_color: string,
     fill_color: string,
     padding?: string,
-    border_radius?: string
+    border_radius?: string,
+    initial_angle?: string,
+    rotate_amount?: string,
+    class?: string,
 }
 
 const { 
@@ -11,27 +14,48 @@ const {
     fill_color,
     padding = "5px",
     border_radius = "10px",
+    initial_angle = "0deg",
+    rotate_amount = "80deg",
+    class: className, ...rest
 } = Astro.props;
+
+const linear_param = fill_color;
+const angular_param = `from calc(var(--angle) + ${initial_angle}), ` + border_color;
+
 --- 
 
-<div class="content">
+<div class:list={["content", className]}>
     <slot />
 </div>
 
 <style define:vars={{ 
-    border_color, 
-    fill_color,
+    linear_param, 
+    angular_param,
     padding,
     border_radius,
+    initial_angle,
+    rotate_amount
 }}>
+
+@property --angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;  
+}
 .content {
     border: 3px solid transparent;
     background: 
-        linear-gradient(var(--fill_color)) padding-box, 
-        conic-gradient(var(--border_color)) border-box;
-    width: fit-content;
-    height: fit-content;
+        linear-gradient(var(--linear_param)) padding-box, 
+        conic-gradient(var(--angular_param)) border-box;
+    /* width: fit-content; */
+    /* height: fit-content; */
     padding: var(--padding);
     border-radius: var(--border_radius);
+    transition: --angle .5s ease;
+    box-shadow: 4px 6px 12px rgba(0, 0, 0, 1);
 }
+.content:hover {
+    --angle: calc(var(--rotate_amount) + var(--initial_angle));
+}
+
 </style>

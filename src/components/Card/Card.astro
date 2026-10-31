@@ -2,6 +2,7 @@
 import { getCollection } from 'astro:content'
 import { getEntries } from 'astro:content'
 import Tag from '../Tag.astro'
+import Ring from '../Ring.astro'
 
 
 interface Props {
@@ -11,43 +12,45 @@ interface Props {
 
 const { page, tag_clickable = true } = Astro.props
 const tags = await getEntries(page.data.tags)
+
+var colors_arr = tags.map(tag => tag.data.color);
+colors_arr.push(colors_arr[0]);
+const colors = colors_arr.join(", ")
+
 ---
 
-<article class="card">
-  <!-- title -->
-  <a class="card_link" href={"/page/" + page.id}>
-    <header>{page.data.title}</header>
-  </a>
-  <!-- tags -->
-  <div class="tags">
-  {
-    tags.map(tag => (
-      <Tag tag={tag} clickable={tag_clickable} />
-    ))
-  }
-  </div>
-  { /* Hero images/video */}
-  {/* project */}
-  <p>{page.data.project}</p>
-</article>
+<Ring border_color={colors}, fill_color='#ffffff', class="card">
+  <article class="card">
+    <!-- title -->
+    <a class="card_link" href={"/page/" + page.id}>
+      <header>{page.data.title}</header>
+    </a>
+    <!-- tags -->
+    <div class="tags">
+    {
+      tags.map(tag => (
+        <Tag tag={tag} clickable={tag_clickable} />
+      ))
+    }
+    </div>
+    { /* Hero images/video */}
+    {/* project */}
+    <p>{page.data.project}</p>
+  </article>  
+</Ring>
 
 <style>
   .card {
-  border: 1px solid #999999;
-  border-radius: 3px;
 
   display: grid;
   grid-template-rows: max-content 200px 1fr;
-  transition: transform 0.3s ease-in-out; 
+  width: auto;
+  height: auto;
 }
 
 .tags {
   flex-direction: row;
   flex: auto;
-}
-
-.card:hover {
-  transform: scale(1.1)
 }
 
 .card_link {
