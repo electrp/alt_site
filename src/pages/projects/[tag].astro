@@ -1,0 +1,33 @@
+---
+import { toAttributeString } from 'astro/runtime/server/render/util.js';
+import { getCollection, getEntries } from 'astro:content';
+import { file } from 'astro:schema';
+
+import Card from '../../components/Card/Card';
+import CardList from '../../components/Card/CardList.astro';
+import CommonHead from '../../components/CommonHead.astro';
+import Header from '../../components/Header.astro';
+import Layout from '../../layouts/Layout.astro';
+
+// import BaseLayout from '../../layouts/BaseLayout.astro';
+
+
+export async function getStaticPaths() {
+    const projects = await getEntries(await getCollection("projects"))
+    const posts = await getEntries(await getCollection("pages"))
+        
+    return projects.map(project => (
+      { 
+        params: { tag: project.id }, 
+        props: { project: project, posts: posts }
+      }
+    ))
+}
+
+const { project, posts } = Astro.props;
+const filtered = posts.filter(post => {
+  return post.data.project == project.id
+})
+---
+
+proj

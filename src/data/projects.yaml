@@ -1,2 +1,10 @@
 dine_n_bash:
   name: Dine n' Bash
+300_engine:
+  name: NiteLite Custom Engine
+animation:
+  name: 3D Animation Projects
+factania:
+  name: Factania Embedded Project
+misc:
+  name: Misc

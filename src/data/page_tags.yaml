@@ -1,8 +1,24 @@
-test:
-  name: Test Tag
-  color: Tomato
+custom_engine:
+  name: Custom Engine
+  color: Blue
   text_color: black
-engine:
-  name: Engines
+ecs:
+  name: Entity Component System
+  color: Blue
+  text_color: black
+embedded:
+  name: Embedded Development
+  color: Blue
+  text_color: black
+graphics:
+  name: Graphics
+  color: Blue
+  text_color: black
+gameplay:
+  name: Gameplay Programming
+  color: Blue
+  text_color: black
+tools:
+  name: Tools
   color: Blue
   text_color: black
