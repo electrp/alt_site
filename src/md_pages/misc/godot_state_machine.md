@@ -1,6 +1,6 @@
 ---
 title: Runtime customizable state machine in godot
-project: factania
+project: godot
 tags:
     - tools
     - gameplay
