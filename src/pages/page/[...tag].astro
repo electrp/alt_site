@@ -8,6 +8,7 @@ import Tag from '../../components/Tag.astro';
 import CommonHead from '../../components/CommonHead.astro';
 import Header from '../../components/Header.astro';
 import Layout from '../../layouts/Layout.astro';
+import Ring from '../../components/Ring.astro';
 
 
 export async function getStaticPaths() {
@@ -25,14 +26,27 @@ export async function getStaticPaths() {
 const { page } = Astro.props;
 const { Content } = await render(page)
 const tags = await getEntries(page.data.tags)
+
+var colors_arr = tags.map(tag => tag.data.color);
+colors_arr.push(colors_arr[0]);
+const colors = colors_arr.join(", ")
 ---
 
 <Layout>
   <CommonHead />
   <Header />
-  <header>
-    {page.data.title}
-  </header>
+  <Ring border_color={colors}, fill_color='#40343e', class="page">
+    <header>
+      {page.data.title}
+    </header>
   {tags.map(tag => <Tag tag={tag} clickable=true />)}
   <Content />
+  </Ring>
 </Layout>
+
+<style>
+.page {
+  max-width: 700px;
+  margin: 1rem auto;
+}
+</style>

@@ -1,24 +1,24 @@
 custom_engine:
   name: Custom Engine
-  color: Blue
+  color: Pink
   text_color: black
 ecs:
   name: Entity Component System
-  color: Blue
+  color: "#7F525D"
   text_color: black
 embedded:
   name: Embedded Development
-  color: Blue
+  color: Grey
   text_color: black
 graphics:
   name: Graphics
-  color: Blue
+  color: "#1F6357"
   text_color: black
 gameplay:
   name: Gameplay Programming
-  color: Blue
+  color: "#556B2F"
   text_color: black
 tools:
   name: Tools
-  color: Blue
+  color: "#5453A6"
   text_color: black

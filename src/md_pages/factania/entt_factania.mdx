@@ -1,0 +1,29 @@
+---
+title: Using `EnTT` ECS on a legacy console game
+project: factania
+tags:
+    - ecs
+    - custom_engine
+    - embedded
+---
+import CardList from "../../components/Card/CardList.astro";
+
+If theres anything mentioned that you would like to hear more about, feel free to contact me directly. There are some things that I can't talk about completely freely on this project.
+
+Factory games tend to spiral out of control very quickly, with sandboxes like factorio requiring the engine to manage an absurd amount of entities while maintaining a smooth experience to the player. We were very aware that our poor CPU wouldn't be able to manage nearly that much, but our goal was to push it as close to it's limit as possible. 
+
+Early into the development of the project, our team had agreed to use the Entity Comonent System (ECS) architecture. We believed that this would allow us to maximize performance, and the team was interested in learning more about the patterns it created.
+
+Researching our platform, it seemed that much the largest performance bottlenecks seemed to be in memory access, with 4kb in available cache. To get the most out of the console, we need to do as much work as possible within those cache bounds as possible. 
+
+Why I chose EnTT over other alternatives.
+{/* dropdown */}
+There were 3 options I was considering: EnTT, flecs, and a custom solution.
+
+flecs was the option I had initially ruled out the earliest due to its vast feature set. While I do find the library powerful, the overwhelming number of options and api complexity made me worry about the difficulty onboarding those inexperienced with ECS tools. While flecs has many great features, I was also concerned the features failing to work or causing performance problems on our device.
+
+I believe custom ECS would have been our best option, though due to time constraints this did not turn out. Both EnTT and flecs are large, very generalized, and feature rich libraries. Both options are more difficult to customize to our platform, and having a stripped-down simplified solution would allow us to optimize further.
+
+EnTT seemed to be our best bet. EnTT tends to restrict it's feature very specifically to what the user asks. It has a relatively simple API, and seems to be recieved well by industry users. I find it to be slightly cumbersome over other solutions, but it's speed and flexibility are undenyable.
+{/* /dropdown */}
+

@@ -1,0 +1,2 @@
+- [ ] Content demo
+- [ ] Project summaries with in-article dropdowns

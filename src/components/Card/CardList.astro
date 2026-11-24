@@ -1,8 +1,10 @@
 ---
 import { getCollection, getEntries } from 'astro:content';
+import Color, { type ColorInstance } from 'color';
 
 import Card from "./Card.astro"
 import Ring from '../Ring.astro';
+import Tag from '../Tag.astro';
 
 interface Props {
     tag_filter?: string;
@@ -14,9 +16,19 @@ const tags = await getEntries(await getCollection("tags"))
 const filtered = pages.filter(page => {
   return page.data.tags.map(tag => tag.id).includes(tag_filter)
 })
+const tag = tags.find(tag => tag.id == tag_filter);
+
+const color = tag == undefined ? "#40343e" : tag.data.color;
+const border_color = Color(color).darken(.25).hex();
 ---
 
-<Ring border_color="red, yellow, purple, red", fill_color='#40343e', class="cardlist">
+<Ring border_color={border_color}, fill_color='#40343e', class="cardbox">
+    {tag != undefined &&
+        <Ring border_color={color}, fill_color='#40343e', class="tagtitle">
+            Posts Tagged <Tag tag={tag}, clickable={false}></Tag>
+        </Ring>
+    }
+    <div class="cardlist">
     {pages.map((post) => {
         var tag_strings = post.data.tags.map(tag => tag.id)
         if (tag_filter != "" && !tag_strings.includes(tag_filter)) {
@@ -25,9 +37,17 @@ const filtered = pages.filter(page => {
             return <Card page={post}/>
         }
     })}
+    </div>
 </Ring>
 
 <style>
+.cardbox {
+   max-width: 700px;
+   margin: 1rem auto; 
+}
+.tagtitle {
+    text-align: center;
+}
 .cardlist {
   max-width: 700px;
   margin: 1rem auto;
