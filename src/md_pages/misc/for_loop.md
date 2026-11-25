@@ -27,7 +27,8 @@ It took me a while, but using my vast intellect I was able to find that the last
 
 ```cpp
 // todo: test on negative numbers
-bool IsEvne(int: number) {
+// © William Bender 2026
+bool IsEven(int: number) {
     std::string thing = std::to_string(number);
     switch(thing[thing.size()]) {
         case '0':
@@ -55,3 +56,5 @@ bool IsEvne(int: number) {
     }
 }
 ```
+
+Thanks for your attention in this matter
