@@ -2,8 +2,14 @@
 import type { restoreFocus } from 'astro/virtual-modules/transitions-swap-functions.js';
 import Color, { type ColorInstance } from 'color';
 
+interface RingContext {
+    layer: number,
+    id: number,
+}
+
 interface Props {
     border_color: string,
+    // ring_context?: RingContext,
     fill_color?: string,
     padding?: string,
     border_radius?: string,
@@ -15,7 +21,8 @@ interface Props {
 }
 
 const { 
-    border_color, 
+    border_color,
+    // ring_context,
     fill_color = '#40343e',
     padding = "5px",
     border_radius = "10px",
@@ -26,10 +33,25 @@ const {
     class: className, 
     ...rest
 } = Astro.props;
-
+ 
 const linear_param = Color(fill_color).darken(1-Math.exp(-.1*layer)).hex();
 const angular_param = `from calc(var(--angle) + ${initial_angle}), ` + border_color;
 const overflow = clip ? "hidden" : "visible";
+
+/* let transition_name = `ring`
+for (let i = 0; i < layer; ++i) {
+    if (Astro.locals.ring_layers.length <= i) {
+        Astro.locals.ring_layers.push(0)
+    }
+    transition_name += `_${Astro.locals.ring_layers[i]}`;
+}
+if (Astro.locals.ring_layers.length <= layer) {
+    Astro.locals.ring_layers.push(0)
+}
+transition_name += `_${Astro.locals.ring_layers[layer]}`;
+Astro.locals.ring_layers[layer] += 1;
+ 
+ console.log(transition_name) */
 --- 
 
 <div class:list={["content", className]} {...rest}>
@@ -51,6 +73,11 @@ const overflow = clip ? "hidden" : "visible";
     inherits: false;
     initial-value: 0deg;  
 }
+/* @property --inheriting_ring_fix {
+    syntax: "<string>"
+    inherits: true;
+    initial-value: "!!!"
+} */
 .content {
     border: 3px solid transparent;
     background: 

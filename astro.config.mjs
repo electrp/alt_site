@@ -7,6 +7,8 @@ import icon from 'astro-icon';
 
 import mdx from '@astrojs/mdx';
 
+import tailwindcss from "@tailwindcss/vite";
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://electrp.com/',
@@ -19,5 +21,6 @@ export default defineConfig({
         interval: 100, // check for changes every 100ms
       },
     },
+    plugins: [tailwindcss()]
   },
 })

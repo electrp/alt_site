@@ -5,27 +5,54 @@ import Color, { type ColorInstance } from 'color';
 import Card from "./Card.astro"
 import Ring from '../Ring.astro';
 import Tag from '../Tag.astro';
+import Project from '../Project.astro';
 
 interface Props {
     tag_filter?: string;
+    project_filter?: string;
 }
 
-const { tag_filter = "" } = Astro.props
-const pages = await getEntries(await getCollection("pages"))
-const tags = await getEntries(await getCollection("tags"))
-const filtered = pages.filter(page => {
-  return page.data.tags.map(tag => tag.id).includes(tag_filter)
-})
-const tag = tags.find(tag => tag.id == tag_filter);
+function shuffle(array) {
+    let currentIndex = array.length;
 
-const color = tag == undefined ? "#40343e" : tag.data.color;
+    while (currentIndex != 0) {
+        let randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+
+        [array[currentIndex], array[randomIndex]] = [
+          array[randomIndex], array[currentIndex]];
+    }
+}
+
+const { tag_filter = "", project_filter = "" } = Astro.props
+const pages = await getEntries(await getCollection("pages"))
+// shuffle(pages)
+const tags = await getEntries(await getCollection("tags"))
+const tag = tags.find(tag => tag.id == tag_filter);
+const projects = await getEntries(await getCollection("projects"))
+const project = projects.find(proj => proj.id == project_filter);
+
+var color 
+if(tag != undefined) {
+    color = tag.data.color
+} else if (project != undefined) {
+    color = project.data.color
+} else {
+    color = "#40343e"
+}
 const border_color = Color(color).darken(.25).hex();
+const background_color = project == undefined ? "#40343e" : Color("#40343e").mix(Color(project.data.color), .15).hex();
 ---
 
-<Ring border_color={border_color}, fill_color='#40343e', class="cardbox">
+<Ring border_color={border_color}, class="cardbox", transition:persist, transition:name="main_content">
     {tag != undefined &&
-        <Ring border_color={color}, fill_color='#40343e', class="tagtitle">
-            Posts Tagged <Tag tag={tag}, clickable={false}></Tag>
+        <Ring border_color={color}, fill_color='#40343e', class="tagtitle", layer={2}>
+            Posts Tagged <Tag tag={tag}, clickable={false} />
+        </Ring>
+    }
+    {project != undefined &&
+        <Ring border_color={color}, fill_color={background_color}, class="tagtitle", layer={2}>
+            Project <Project project={project}, clickable={false} />
         </Ring>
     }
     <div class="cardlist">
@@ -33,6 +60,8 @@ const border_color = Color(color).darken(.25).hex();
         var tag_strings = post.data.tags.map(tag => tag.id)
         if (tag_filter != "" && !tag_strings.includes(tag_filter)) {
             return 
+        } else if (project_filter != "" && post.data.project.id != project_filter) {
+            return
         } else {
             return <Card page={post}/>
         }

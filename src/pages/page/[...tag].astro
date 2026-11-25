@@ -9,6 +9,7 @@ import CommonHead from '../../components/CommonHead.astro';
 import Header from '../../components/Header.astro';
 import Layout from '../../layouts/Layout.astro';
 import Ring from '../../components/Ring.astro';
+import Card from '../../components/Card/Card.astro';
 
 
 export async function getStaticPaths() {
@@ -35,12 +36,10 @@ const colors = colors_arr.join(", ")
 <Layout>
   <CommonHead />
   <Header />
-  <Ring border_color={colors}, fill_color='#40343e', class="page">
-    <header>
-      {page.data.title}
-    </header>
-  {tags.map(tag => <Tag tag={tag} clickable=true />)}
-  <Content />
+  <Ring border_color={colors}, fill_color='#40343e', class="page", transition:persist, transition:name="main_content">
+    <Card page={page}></Card>
+    <!-- {tags.map(tag => <Tag tag={tag} clickable=true />)} -->
+    <Content />
   </Ring>
 </Layout>
 

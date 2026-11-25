@@ -10,13 +10,11 @@ export const pages = [
     // { name: "About", path: "About" },
 ]
 
-
-
 const props = Astro.props 
 const homepage = Astro.url
 ---
 
-<Ring border_color="#726972, #EE72F1,#726972", fill_color='#40343e', initial_angle="-45deg", rotate_amount="200deg", layer={3}, padding="0px", clip={true}>
+<Ring border_color="#726972, #EE72F1,#726972", fill_color='#40343e', initial_angle="-45deg", rotate_amount="200deg", layer={0}, padding="0px", clip={true}>
   <div id="page-selector" class="page-selector">
     <a href="/" class="gifbox" style="padding-right: 3px;">
       <Gifs></Gifs>  
@@ -28,9 +26,15 @@ const homepage = Astro.url
         &lt-- click to go home
       </div>
     </div> -->
-    <div style="display: flex; flex-grow: 1; flex-direction: row; align-items: center; justify-content: center;">
+    <div class="button_container">
+      <div class="button_column">
         <HeaderButton url="/", text="Home" />
+        <HeaderButton url="/", text="Tags" />
+      </div>
+      <div class="button_column">
         <HeaderButton url="/about", text="About" />
+        <HeaderButton url="/", text="Projects" />
+      </div>
     </div>
     <div style="display: flex; width: auto; height:100%; align-items: center; margin-left: auto; padding-right: 5px">
   </div>
@@ -40,6 +44,24 @@ const homepage = Astro.url
 <style>
 .gifbox {
   
+}
+
+.button_container {
+ display: flex; 
+ flex-grow: 1; 
+ flex-direction: row; 
+ align-items: center; 
+ justify-content: center;
+}
+
+.button_column {
+  display: grid;
+  gap: 3px;
+  padding: 10px;
+  width: 25%;
+  max-width: 20rem;
+  min-width: fit-content;
+  height: fit-content;
 }
 
 .page-selector {

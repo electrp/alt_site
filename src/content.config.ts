@@ -24,7 +24,9 @@ const projects = defineCollection({
   loader: file("src/data/projects.yaml"),
   schema: z.object({
     name: z.string(),
-    description: z.optional(z.string())
+    description: z.optional(z.string()),
+    color: z.string().refine(colorValidator),
+    text_color: z.optional(z.string().refine(colorValidator))
   })
 })
 

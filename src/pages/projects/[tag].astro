@@ -8,6 +8,7 @@ import CardList from '../../components/Card/CardList.astro';
 import CommonHead from '../../components/CommonHead.astro';
 import Header from '../../components/Header.astro';
 import Layout from '../../layouts/Layout.astro';
+import Ring from '../../components/Ring.astro';
 
 // import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -28,6 +29,11 @@ const { project, posts } = Astro.props;
 const filtered = posts.filter(post => {
   return post.data.project == project.id
 })
+
 ---
 
-proj
+<Layout>
+  <CommonHead />
+  <Header />
+  <CardList project_filter={project.id} />
+</Layout>

@@ -1,10 +1,15 @@
 dine_n_bash:
   name: Dine n' Bash
+  color: "#8c743c"
 300_engine:
   name: NiteLite Custom Engine
+  color: "#5e35a6"
 animation:
   name: 3D Animation Projects
+  color: "#3f966e"
 factania:
   name: Factania Embedded Project
+  color: Grey
 misc:
   name: Misc
+  color: Pink

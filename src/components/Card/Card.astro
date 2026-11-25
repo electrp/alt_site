@@ -3,6 +3,10 @@ import { getCollection } from 'astro:content'
 import { getEntries } from 'astro:content'
 import Tag from '../Tag.astro'
 import Ring from '../Ring.astro'
+import Project from '../Project.astro'
+import { getEntry } from 'astro:content'
+import Color, { type ColorInstance } from 'color';
+
 
 
 interface Props {
@@ -17,14 +21,18 @@ const {
   layer = 2,
 } = Astro.props
 const tags = await getEntries(page.data.tags)
+const project = await getEntry(page.data.project)
 
 var colors_arr = tags.map(tag => tag.data.color);
 colors_arr.push(colors_arr[0]);
 const colors = colors_arr.join(", ")
 
+const name = page.data.title;
+
+const background_color = project == undefined ? "#40343e" : Color("#40343e").mix(Color(project.data.color), .15).hex();
 ---
 
-<Ring border_color={colors}, class="card", layer={layer}>
+<Ring border_color={colors}, fill_color={background_color}, class="card", layer={layer}, transition:persist, transition:name={name}>
   <article class="card">
     <!-- title -->
     <a class="card_link" href={"/page/" + page.id}>
@@ -38,9 +46,13 @@ const colors = colors_arr.join(", ")
       ))
     }
     </div>
+    {
+      project && 
+        <Project project={project}, clickable={true} />
+    }
     { /* Hero images/video */}
     {/* project */}
-    <p>{page.data.project}</p>
+    <!-- <p>{page.data.project}</p> -->
   </article>  
 </Ring>
 
@@ -48,14 +60,16 @@ const colors = colors_arr.join(", ")
   .card {
 
   display: grid;
-  grid-template-rows: max-content 200px 1fr;
+  /* grid-template-rows: max-content 10px 1fr; */
   width: auto;
   height: auto;
+  flow: row;
 }
 
 .tags {
   flex-direction: row;
   flex: auto;
+  /* height: auto; */
 }
 
 .card_link {

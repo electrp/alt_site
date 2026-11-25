@@ -1,0 +1,39 @@
+---
+interface Props {
+  project: any,
+  clickable: boolean 
+}
+
+const { project, clickable = true } = Astro.props
+
+console.log(project)
+
+const color = project.data.color;
+const text_color = project.data.text_color ? project.data.text_color : "Black";
+---
+
+{clickable ? (
+    <a href={"/projects/" + project.id}> 
+        <div class="tag">
+            {project.data.name}
+        </div>
+    </a> 
+) : (
+    <div class="tag">
+        {project.data.name}
+    </div>
+)}
+
+
+<style define:vars={{ color, text_color }}>
+.tag {
+  border-radius: 7px;
+  background-color: var(--color);
+  color: var(--text_color);
+  padding: 2px;
+  margin: 2px;
+  width: fit-content;
+  height: fit-content;
+  display: inline-block;
+}
+</style>
