@@ -14,7 +14,7 @@ const props = Astro.props
 const homepage = Astro.url
 ---
 
-<Ring border_color="#726972, #EE72F1,#726972", fill_color='#40343e', initial_angle="-45deg", rotate_amount="200deg", layer={0}, padding="0px", clip={true}>
+<Ring border_colors={["#726972", "#EE72F1", "#726972"]} fill_color='#40343e', initial_angle="-45deg", rotate_amount="200deg", layer={0}, padding="0px", clip={true}>
   <div id="page-selector" class="page-selector">
     <a href="/" class="gifbox" style="padding-right: 3px;">
       <Gifs></Gifs>  

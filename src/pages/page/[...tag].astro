@@ -30,14 +30,21 @@ const tags = await getEntries(page.data.tags)
 
 var colors_arr = tags.map(tag => tag.data.color);
 colors_arr.push(colors_arr[0]);
-const colors = colors_arr.join(", ")
 ---
 
 <Layout>
   <CommonHead />
   <Header />
-  <Ring border_color={colors}, fill_color='#40343e', class="page", transition:persist, transition:name="main_content">
-    <Card page={page}></Card>
+  <Ring 
+    border_colors={colors_arr}, 
+    border_color_fade={.6},
+    border_color_fade_hovered={.6},
+    fill_color='#40343e', 
+    class="page", 
+    transition:persist, 
+    transition:name="main_content"
+  >
+    <Card page={page}, selected={true}, tag_clickable={false}></Card>
     <!-- {tags.map(tag => <Tag tag={tag} clickable=true />)} -->
     <Content />
   </Ring>

@@ -8,8 +8,7 @@ interface RingContext {
 }
 
 interface Props {
-    border_color: string,
-    // ring_context?: RingContext,
+    border_colors: String[],
     fill_color?: string,
     padding?: string,
     border_radius?: string,
@@ -18,10 +17,12 @@ interface Props {
     class?: string,
     layer?: number,
     clip?: boolean,
+    border_color_fade?: number,
+    border_color_fade_hovered?: number
 }
 
 const { 
-    border_color,
+    border_colors,
     // ring_context,
     fill_color = '#40343e',
     padding = "5px",
@@ -31,11 +32,27 @@ const {
     layer = 1,
     clip = false,
     class: className, 
+    border_color_fade = .7,
+    border_color_fade_hovered = 1,
+ 
     ...rest
 } = Astro.props;
  
 const linear_param = Color(fill_color).darken(1-Math.exp(-.1*layer)).hex();
-const angular_param = `from calc(var(--angle) + ${initial_angle}), ` + border_color;
+
+console.log(border_colors)
+console.log(Astro.props)
+
+// A darkening parameter gets mixed in and automated on hover
+const darken_percent = (border_color_fade * 100).toString() + "%";
+const darken_percent_hovered = (border_color_fade_hovered * 100).toString() + "%";
+const ring_bg_param = `from calc(var(--angle) + ${initial_angle}), ` 
+    + border_colors.map(str =>
+        "color-mix(in srgb, " 
+        + Color(str).alpha(border_color_fade).hex()
+        + " var(--lighten), transparent)"
+    ).join(", ");   
+
 const overflow = clip ? "hidden" : "visible";
 
 /* let transition_name = `ring`
@@ -50,8 +67,7 @@ if (Astro.locals.ring_layers.length <= layer) {
 }
 transition_name += `_${Astro.locals.ring_layers[layer]}`;
 Astro.locals.ring_layers[layer] += 1;
- 
- console.log(transition_name) */
+ */
 --- 
 
 <div class:list={["content", className]} {...rest}>
@@ -60,7 +76,9 @@ Astro.locals.ring_layers[layer] += 1;
 
 <style define:vars={{ 
     linear_param, 
-    angular_param,
+    ring_bg_param,
+    darken_percent,
+    darken_percent_hovered,
     padding,
     border_radius,
     initial_angle,
@@ -73,24 +91,26 @@ Astro.locals.ring_layers[layer] += 1;
     inherits: false;
     initial-value: 0deg;  
 }
-/* @property --inheriting_ring_fix {
-    syntax: "<string>"
-    inherits: true;
-    initial-value: "!!!"
-} */
+@property --lighten {
+    syntax: "<percentage>";
+    inherits: false;
+    initial-value: 100%;
+}
 .content {
+    --lighten: var(--darken_percent);
     border: 3px solid transparent;
     background: 
         linear-gradient(var(--linear_param)) padding-box, 
-        conic-gradient(var(--angular_param)) border-box;
+        conic-gradient(var(--ring_bg_param)) border-box;
     padding: var(--padding);
     border-radius: var(--border_radius);
-    transition: --angle .5s ease;
+    transition: --angle .5s ease, --lighten .35s ease-in-out;
     box-shadow: 4px 6px 12px rgba(0, 0, 0, 1);
     overflow: var(--overflow)
 }
 .content:hover {
     --angle: calc(var(--rotate_amount) + var(--initial_angle));
+    --lighten: var(--darken_percent_hovered); 
 }
 
 </style>

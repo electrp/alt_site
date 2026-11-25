@@ -12,31 +12,39 @@ import Color, { type ColorInstance } from 'color';
 interface Props {
   page: any
   tag_clickable?: boolean
-  layer?: number
+  layer?: number,
+  selected?: boolean
 }
 
 const { 
   page, 
   tag_clickable = true,
   layer = 2,
+  selected = false,
 } = Astro.props
 const tags = await getEntries(page.data.tags)
 const project = await getEntry(page.data.project)
 
 var colors_arr = tags.map(tag => tag.data.color);
 colors_arr.push(colors_arr[0]);
-const colors = colors_arr.join(", ")
 
 const name = page.data.title;
 
-const background_color = project == undefined ? "#40343e" : Color("#40343e").mix(Color(project.data.color), .15).hex();
+const background_color = project == undefined ? "#40343e" : Color("#40343e").mix(Color(project.data.color), .35).hex();
 ---
 
-<Ring border_color={colors}, fill_color={background_color}, class="card", layer={layer}, transition:persist, transition:name={name}>
+<Ring border_colors={colors_arr}, border_color_fade={selected ? 1 : .15}, fill_color={background_color}, class="card", layer={layer}, transition:persist, transition:name={name}>
+
   <article class="card">
+    {
+      project && 
+        <Project project={project}, clickable={true}>
+
+        </Project>
+    }
     <!-- title -->
     <a class="card_link" href={"/page/" + page.id}>
-      <header>{page.data.title}</header>
+      <h3>{page.data.title}</h3>
     </a>
     <!-- tags -->
     <div class="tags">
@@ -46,10 +54,7 @@ const background_color = project == undefined ? "#40343e" : Color("#40343e").mix
       ))
     }
     </div>
-    {
-      project && 
-        <Project project={project}, clickable={true} />
-    }
+    
     { /* Hero images/video */}
     {/* project */}
     <!-- <p>{page.data.project}</p> -->
@@ -57,7 +62,12 @@ const background_color = project == undefined ? "#40343e" : Color("#40343e").mix
 </Ring>
 
 <style>
-  .card {
+
+h3 {
+  margin: 2px;
+}
+
+.card {
 
   display: grid;
   /* grid-template-rows: max-content 10px 1fr; */

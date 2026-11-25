@@ -44,14 +44,14 @@ const border_color = Color(color).darken(.25).hex();
 const background_color = project == undefined ? "#40343e" : Color("#40343e").mix(Color(project.data.color), .15).hex();
 ---
 
-<Ring border_color={border_color}, class="cardbox", transition:persist, transition:name="main_content">
+<Ring border_colors={[border_color]}, class="cardbox", transition:persist, transition:name="main_content">
     {tag != undefined &&
-        <Ring border_color={color}, fill_color='#40343e', class="tagtitle", layer={2}>
+        <Ring border_colors={[color]}, fill_color='#40343e', class="tagtitle", layer={2}>
             Posts Tagged <Tag tag={tag}, clickable={false} />
         </Ring>
     }
     {project != undefined &&
-        <Ring border_color={color}, fill_color={background_color}, class="tagtitle", layer={2}>
+        <Ring border_colors={[color]}, fill_color={background_color}, class="tagtitle", layer={2}>
             Project <Project project={project}, clickable={false} />
         </Ring>
     }
