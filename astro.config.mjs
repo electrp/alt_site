@@ -11,7 +11,7 @@ import tailwindcss from "@tailwindcss/vite";
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://electrp.com/',
+  site: 'https://portfolio.electrp.com/',
   integrations: [preact(), icon(), mdx()],
   vite: {
     server: {
